@@ -134,4 +134,4 @@ Contributions are welcome for reusable interactions, authoring improvements, doc
 
 ## License
 
-No license has been selected yet. Until a license is added, do not assume permission to reuse, modify, or redistribute this repository’s contents.
+Distributed under the [MIT License](LICENSE). You may use, modify, and redistribute the repository while preserving the copyright and license notice.

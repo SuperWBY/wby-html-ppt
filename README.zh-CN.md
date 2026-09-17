@@ -98,3 +98,7 @@ ES modules、动态 fetch、CSS @import、srcset、远程嵌入资源需要先�
 - `docs/images/`：这次课件的展示截图。
 
 这里交付的是 HTML 演示文稿，不直接生成可编辑的 PowerPoint `.pptx`。如需 PPTX，应另行使用导出流程并检查可编辑性。
+
+## 许可证
+
+本项目采用 [MIT License](LICENSE)。你可以使用、修改和再分发本仓库内容，但需要保留版权与许可证声明。

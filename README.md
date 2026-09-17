@@ -49,7 +49,11 @@ and deliver editable source files plus a shareable standalone HTML file.
 
 For revisions: “Use $wby-html-ppt to revise slide 6 of this deck and preserve the other approved slides.”
 
-The Skill supplies its own decision framework and packaging tool. oil-ppt and oil-tone are optional integrations when available. Generating new AI illustrations requires an image-generation tool. This repository does not include model services, API keys, or those external Skills.
+The Skill includes slide-authoring and copywriting guidance plus its own page-management and packaging tools. No installation or invocation of oil-ppt or oil-tone is required. Image generation, browser access, and Python are supplied by your environment. This repository does not include model services or API keys. See [sources and licenses](third_party/README.md).
+
+## Manage slides
+
+See [the built-in CLI guide](references/slide-authoring.md) for init, add, move, remove, status, check, build, and preview commands. Page removal preserves source files. Static checks do not replace browser review.
 
 ## Build a standalone file
 

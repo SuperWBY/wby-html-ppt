@@ -20,17 +20,13 @@ Distinguish requests for a proposal from requests to execute. For proposals, sho
 5. Revise content, order, pacing, and expression based on feedback. Maintain a single ordered manifest when adding, removing, or reordering slides.
 6. Follow [interaction-delivery.en.md](references/interaction-delivery.en.md). Deliver maintainable source and standalone HTML. Report actual checks and environmental limitations.
 
-## Capability coordination
+## Internal authoring and writing guidance
 
-Read available Skills at their actual paths before using them.
+Use [slide-authoring.md](references/slide-authoring.md) for source organization, page creation, ordering, review, and the bundled CLI. Use [copywriting.md](references/copywriting.md) when writing audience-facing text. These internal references replace external slide-authoring and tone Skills; do not require oil-ppt or oil-tone.
 
-- **oil-ppt**, when available: slide structure, ordering, and CLI state. Use its current interface without copying its implementation or imposing its example palette. Keep this Skill's standalone player separate from its preview output.
-- **oil-tone**, when available: audience-facing prose while preserving the user's viewpoint and identity.
-- **imagegen**: read its instructions and use the available image-generation tool for new character, scene, or tool illustrations. Match the deck's direction and save assets in the project. Do not substitute programmatic placeholders for requested generated imagery.
-- **HTML/CSS/SVG**: prefer code for exact text, flows, comparisons, timelines, bubbles, and editable diagrams.
-- **Browser tools**: verify layout, keyboard navigation, fullscreen, overview, and image enlargement using permitted tools.
+Use the available image-generation tool for new scene-specific illustrations; persist assets in the project. Use HTML/CSS/SVG for precise text and diagrams. Use permitted browser tools for visual and interaction verification. The environment still supplies image generation, browser access, and Python. Read relevant tool instructions when required by the environment; do not claim missing capabilities or install tools automatically.
 
-Explain the effect of missing optional capabilities; do not claim unavailable tools were used or automatically install them. Default output is HTML. If PPTX is requested, use an appropriate export workflow and explain editability limits.
+Default output is HTML. Use a separate appropriate export workflow if PPTX is requested and explain editability limits. Source acknowledgments and licenses are in [third_party/README.md](third_party/README.md).
 
 ## Standard presentation capabilities
 
@@ -48,7 +44,7 @@ Maintain a UTF-8 manifest:
 {"title":"Presentation title","slides":["slides/intro.html","slides/example.html"]}
 ```
 
-Paths are relative to the project. Include only slides intended for delivery. An existing oil-ppt deck.json can be used after checking scope.
+Paths are relative to the project. Include only slides intended for delivery. An existing compatible deck.json can be used after checking scope.
 
 ```sh
 python3 <skill-directory>/scripts/build.py <project-directory> --manifest <manifest-path> --output <output-html-path>

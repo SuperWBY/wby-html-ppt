@@ -1,0 +1,4 @@
+interface:
+  display_name: "WBY HTML PPT"
+  short_description: "按讲解目标设计视觉表达，提供固定交互、适度动画与单文件交付"
+  default_prompt: "使用 $wby-html-ppt，根据我的材料和讲解目标制作或修改 HTML 演示，选择合适的视觉表达并交付带固定交互的独立 HTML。"

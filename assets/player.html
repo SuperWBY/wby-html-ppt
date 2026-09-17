@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>__TITLE__</title>
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: #fff; }
+    .stage { position: relative; width: min(100vw, calc(100vh * 16 / 9)); aspect-ratio: 16 / 9; background: #fff; box-shadow: none; }
+    iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .controls { position: fixed; right: 24px; bottom: 20px; display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid rgba(20, 45, 35, .12); border-radius: 999px; background: rgba(255, 255, 255, .9); box-shadow: 0 8px 30px rgba(20, 45, 35, .13); backdrop-filter: blur(10px); }
+    button { width: 38px; height: 38px; border: 0; border-radius: 50%; color: #fff; background: #246b54; font-size: 20px; cursor: pointer; }
+    button:disabled { opacity: .35; cursor: default; }
+    .counter { min-width: 48px; text-align: center; color: #294039; font-size: 14px; font-weight: 650; }
+  dialog{width:96vw;max-width:none;height:94vh;max-height:none;padding:52px 18px 18px;border:0;border-radius:16px;background:#15221e;color:white}dialog::backdrop{background:rgba(0,0,0,.82)}dialog img{display:block;width:100%;height:100%;object-fit:contain}dialog button{position:absolute;right:14px;top:8px;background:white;color:#15221e}dialog[open]{display:flex;flex-direction:column}
+    .controls .utility { width:38px; background:#edf5f0; color:#246b54; display:grid; place-items:center; }
+    .utility svg { width:20px; height:20px; }
+    button:focus-visible { outline:3px solid #70b69b; outline-offset:3px; }
+    .divider { height:22px; width:1px; background:#dce6df; margin:0 3px; }
+    #overview { background:#f4f8f5; color:#243b30; padding:0; width:96vw; height:94vh; }
+    #overview .overview-head { display:flex; align-items:center; justify-content:space-between; padding:22px 28px; border-bottom:1px solid #dce6df; flex:none; }
+    #overview h2 { margin:0; font-size:24px; }
+    #overview .hint { font-size:14px; font-weight:400; color:#6d7f73; margin-left:18px; }
+    #overview #close-overview { position:static; flex:none; background:#e2eee6; }
+    .overview-grid { min-height:0; grid-auto-rows:max-content; overflow:auto; padding:24px; display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:24px; align-content:start; }
+    #overview .thumbnail { position:relative; top:auto; right:auto; flex:none; align-self:start; width:100%; height:auto; padding:0; border:2px solid transparent; border-radius:12px; background:white; color:#304438; text-align:left; overflow:hidden; box-shadow:0 3px 15px #1838250a; }
+    #overview .thumbnail[aria-current="page"] { border-color:#2e8961; box-shadow:0 0 0 3px #cee9da; }
+    .thumbnail-preview { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:#fff; pointer-events:none; }
+    .thumbnail iframe { position:absolute; inset:0; pointer-events:none; }
+    .thumbnail-label { display:flex; gap:10px; padding:13px 14px; border-top:1px solid #edf1ee; font-size:14px; line-height:1.4; }
+    .thumbnail-label b { color:#327855; flex:none; }
+    .thumbnail-label span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    #presentation-status { position:fixed; left:20px; bottom:20px; max-width:60vw; background:#edf5f0; color:#28513b; padding:10px 15px; border-radius:8px; font-size:14px; }
+    #presentation-status:empty { display:none; }
+    @media(max-width:600px) { .controls{right:12px;bottom:12px;gap:6px}.overview-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px}#overview .hint{display:none} }
+    @keyframes overlay-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+    dialog[open] { animation:overlay-in 180ms ease-out; }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important;transition:none!important;scroll-behavior:auto!important; } }
+  </style>
+</head>
+<body>
+  <main class="stage"><iframe id="slide" title="演示文稿"></iframe></main>
+  <nav class="controls" aria-label="翻页控制">
+    <button id="fullscreen" class="utility" type="button" aria-label="进入全屏" title="全屏切换（F）" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button>
+    <button id="open-overview" class="utility" type="button" aria-label="页面总览" title="页面总览（O）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></button><span class="divider"></span>
+    <button id="prev" type="button" aria-label="上一页">‹</button>
+    <span class="counter" id="counter"></span>
+    <button id="next" type="button" aria-label="下一页">›</button>
+  </nav>
+  <dialog id="zoom" aria-label="系统截图大图"><button id="close-zoom" aria-label="关闭大图">×</button><img id="zoom-image" alt=""></dialog>
+  <dialog id="overview" aria-labelledby="overview-title"><header class="overview-head"><h2 id="overview-title">页面总览<span class="hint">点击跳转 · O / Esc 关闭</span></h2><button id="close-overview" aria-label="关闭总览">×</button></header><div class="overview-grid"></div></dialog>
+  <div id="presentation-status" role="status"></div>
+  <script>
+    /* EMBEDDED_DECK */
+    const slides = slideDocuments;
+    const frame = document.querySelector("#slide");
+    const counter = document.querySelector("#counter");
+    const prev = document.querySelector("#prev");
+    const next = document.querySelector("#next");
+    let index = Math.max(0, Math.min(slides.length - 1, Number(location.hash.slice(1)) - 1 || 0));
+
+    function show(target) {
+      index = Math.max(0, Math.min(slides.length - 1, target));
+      frame.srcdoc = slideDocuments[index];
+      counter.textContent = `${index + 1} / ${slides.length}`;
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+      history.replaceState(null, "", `#${index + 1}`);
+    }
+    prev.addEventListener("click", () => show(index - 1));
+    next.addEventListener("click", () => show(index + 1));
+    const overview = document.querySelector('#overview');
+    const fullscreenButton = document.querySelector('#fullscreen');
+    let overviewBuilt = false;
+    async function toggleFullscreen() {
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+        else throw new Error('unsupported');
+        document.querySelector('#presentation-status').textContent = '';
+      } catch {
+        document.querySelector('#presentation-status').textContent = '当前浏览器未允许网页全屏，请在独立浏览器中打开后使用全屏按钮。';
+      }
+    }
+    fullscreenButton.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', () => {
+      const active = Boolean(document.fullscreenElement);
+      fullscreenButton.setAttribute('aria-pressed', String(active));
+      fullscreenButton.setAttribute('aria-label', active ? '退出全屏' : '进入全屏');
+      fullscreenButton.title = (active ? '退出全屏' : '进入全屏') + '（F）';
+    });
+    function toggleOverview() {
+      if (overview.open) { overview.close(); return; }
+      if (!overviewBuilt) {
+        const grid = overview.querySelector('.overview-grid');
+        slides.forEach((src, i) => {
+          const card = document.createElement('button');
+          card.type = 'button'; card.className = 'thumbnail';
+          card.setAttribute('aria-label', `跳转到第 ${i + 1} 页`);
+          const preview = document.createElement('div'); preview.className = 'thumbnail-preview';
+          const thumb = document.createElement('iframe');
+          thumb.tabIndex = -1; thumb.setAttribute('aria-hidden','true');
+          thumb.loading = 'lazy'; thumb.srcdoc = slideDocuments[i];
+          const label = document.createElement('div'); label.className = 'thumbnail-label';
+          const number = document.createElement('b'); number.textContent = String(i + 1).padStart(2, '0');
+          const title = document.createElement('span'); title.textContent = `第 ${i + 1} 页`;
+          thumb.addEventListener('load', () => {
+            const text = thumb.contentDocument?.title || title.textContent;
+            title.textContent = text; card.setAttribute('aria-label', `跳转到第 ${i + 1} 页：${text}`);
+          });
+          preview.append(thumb); label.append(number, title); card.append(preview, label);
+          card.addEventListener('click', () => { overview.close(); show(i); });
+          grid.append(card);
+        });
+        overviewBuilt = true;
+      }
+      const cards = overview.querySelectorAll('.thumbnail');
+      cards.forEach((card, i) => i === index ? card.setAttribute('aria-current','page') : card.removeAttribute('aria-current'));
+      overview.showModal();
+      cards[index].focus(); cards[index].scrollIntoView({block:'nearest'});
+    }
+    document.querySelector('#open-overview').addEventListener('click', toggleOverview);
+    document.querySelector('#close-overview').addEventListener('click', () => overview.close());
+    function handleKeys(event) {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.target.closest?.('input,textarea,select,[contenteditable="true"]')) return;
+      const key = event.key.toLowerCase();
+      if (zoom.open) return;
+      if (key === 'o') { event.preventDefault(); event.stopImmediatePropagation(); if (!event.repeat) toggleOverview(); return; }
+      if (overview.open) return;
+      if (['arrowleft','pageup','arrowright','pagedown',' ','f'].includes(key)) {
+        event.preventDefault(); event.stopImmediatePropagation();
+        if (key === 'f') { if (!event.repeat) toggleFullscreen(); }
+        else show(index + (['arrowleft','pageup'].includes(key) ? -1 : 1));
+      }
+    }
+    addEventListener('keydown', handleKeys, true);
+    const zoom = document.querySelector('#zoom');
+    const zoomImage = document.querySelector('#zoom-image');
+    document.querySelector('#close-zoom').addEventListener('click', () => zoom.close());
+    zoom.addEventListener('click', event => { if(event.target === zoom) zoom.close(); });
+    frame.addEventListener('load', () => {
+      frame.contentWindow.addEventListener('keydown', handleKeys, true);
+      frame.contentDocument.querySelectorAll('.image-link').forEach(link => {
+        link.addEventListener('click', event => {
+          event.preventDefault();
+          zoomImage.src = link.href;
+          zoomImage.alt = link.querySelector('img')?.alt || '图片大图';
+          zoom.showModal();
+        });
+      });
+
+      frame.contentDocument.querySelectorAll('button[data-url]').forEach(button => {
+        button.addEventListener('click', () => { const url = new URL(button.dataset.url, location.href); if (['https:', 'http:'].includes(url.protocol)) window.open(url.href, '_blank', 'noopener'); });
+      });
+      frame.contentDocument.querySelectorAll('[data-copy-target]').forEach(button => {
+        button.addEventListener('click', async () => {
+          const target = frame.contentDocument.querySelector(button.dataset.copyTarget);
+          if (!target) return;
+          try { await navigator.clipboard.writeText(target.textContent); button.textContent = '已复制'; }
+          catch { button.textContent = '请选中文本后复制'; }
+        });
+      });
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches && frame.animate) {
+        frame.getAnimations().forEach(a => a.cancel());
+        frame.animate([{opacity:.35, transform:'translateY(6px)'},{opacity:1,transform:'translateY(0)'}],{duration:220,easing:'ease-out'});
+      }
+    });
+    show(index);
+  </script>
+</body>
+</html>

@@ -22,11 +22,11 @@ Distinguish requests for a proposal from requests to execute. For proposals, sho
 
 ## Internal authoring and writing guidance
 
-Use [slide-authoring.md](references/slide-authoring.md) for source organization, page creation, ordering, review, and the bundled CLI. Use [copywriting.md](references/copywriting.md) when writing audience-facing text. These internal references replace external slide-authoring and tone Skills; do not require oil-ppt or oil-tone.
+Use [slide-authoring.md](references/slide-authoring.md) for source organization, page creation, ordering, review, and the bundled CLI. Use [copywriting.md](references/copywriting.md) when writing audience-facing text.
 
 Use the available image-generation tool for new scene-specific illustrations; persist assets in the project. Use HTML/CSS/SVG for precise text and diagrams. Use permitted browser tools for visual and interaction verification. The environment still supplies image generation, browser access, and Python. Read relevant tool instructions when required by the environment; do not claim missing capabilities or install tools automatically.
 
-Default output is HTML. Use a separate appropriate export workflow if PPTX is requested and explain editability limits. Source acknowledgments and licenses are in [third_party/README.md](third_party/README.md).
+Default output is HTML. Use a separate appropriate export workflow if PPTX is requested and explain editability limits.
 
 ## Standard presentation capabilities
 

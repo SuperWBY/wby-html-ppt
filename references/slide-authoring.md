@@ -20,18 +20,18 @@ Keep page styles isolated. For the supplied player, use 1920×1080 source canvas
 
 ## Built-in commands
 
-Resolve `scripts/deck.py` relative to this Skill. Python 3.9+ is sufficient; no oil-ppt CLI or external Skill is needed.
+Resolve `scripts/studio.py` relative to this Skill. Python 3.9+ is sufficient.
 
 ```sh
-python3 scripts/deck.py init /path/to/deck --title "My talk"
-python3 scripts/deck.py add /path/to/deck opening --title "Opening"
-python3 scripts/deck.py add /path/to/deck evidence --title "Evidence" --after opening
-python3 scripts/deck.py move /path/to/deck evidence --to 1
-python3 scripts/deck.py remove /path/to/deck evidence
-python3 scripts/deck.py status /path/to/deck
-python3 scripts/deck.py check /path/to/deck
-python3 scripts/deck.py build /path/to/deck --output /path/to/deck/dist/talk.html
-python3 scripts/deck.py preview /path/to/deck --port 4173
+python3 scripts/studio.py init /path/to/deck --title "My talk"
+python3 scripts/studio.py add /path/to/deck opening --title "Opening"
+python3 scripts/studio.py add /path/to/deck evidence --title "Evidence" --after opening
+python3 scripts/studio.py move /path/to/deck evidence --to 1
+python3 scripts/studio.py remove /path/to/deck evidence
+python3 scripts/studio.py status /path/to/deck
+python3 scripts/studio.py check /path/to/deck
+python3 scripts/studio.py build /path/to/deck --output /path/to/deck/dist/talk.html
+python3 scripts/studio.py preview /path/to/deck --port 4173
 ```
 
 `add` creates an unfinished canvas, not a designed slide. Author it and remove `data-wby-draft` when it is ready to inspect. Check/build/preview reject marked drafts. IDs use lowercase letters, digits, and hyphens. `--to` is one-based. `remove` only removes the manifest entry; it preserves source files and assets. The previous manifest is stored as `deck.json.bak`. To restore a removed page, reinsert its path into the manifest rather than overwriting its source.

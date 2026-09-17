@@ -48,7 +48,7 @@ git clone https://github.com/SuperWBY/wby-html-ppt.git ~/.codex/skills/wby-html-
 
 也可以说：“使用 $wby-html-ppt 修改现有课件第 6 页，保留其他已确认页面。”
 
-Skill 已内置页面制作、文案指南，以及页面管理和打包工具，无需安装或调用 oil-ppt、oil-tone。生图、浏览器和 Python 由运行环境提供；仓库不附带模型服务或 API 密钥。参见[来源与许可](third_party/README.md)。
+Skill 已内置页面制作、文案指南，以及页面管理和打包工具。生图、浏览器和 Python 由运行环境提供；仓库不附带模型服务或 API 密钥。
 
 ## 页面管理
 

@@ -20,18 +20,18 @@
 
 ## 内置命令
 
-将 scripts/deck.py 解析为本 Skill 下的绝对路径。只需 Python 3.9+，不需要 oil-ppt 命令或其他 Skill。
+将 scripts/studio.py 解析为本 Skill 下的绝对路径。只需 Python 3.9+。
 
 ```sh
-python3 scripts/deck.py init /path/to/deck --title "演示标题"
-python3 scripts/deck.py add /path/to/deck opening --title "开场"
-python3 scripts/deck.py add /path/to/deck evidence --title "证据" --after opening
-python3 scripts/deck.py move /path/to/deck evidence --to 1
-python3 scripts/deck.py remove /path/to/deck evidence
-python3 scripts/deck.py status /path/to/deck
-python3 scripts/deck.py check /path/to/deck
-python3 scripts/deck.py build /path/to/deck --output /path/to/deck/dist/talk.html
-python3 scripts/deck.py preview /path/to/deck --port 4173
+python3 scripts/studio.py init /path/to/deck --title "演示标题"
+python3 scripts/studio.py add /path/to/deck opening --title "开场"
+python3 scripts/studio.py add /path/to/deck evidence --title "证据" --after opening
+python3 scripts/studio.py move /path/to/deck evidence --to 1
+python3 scripts/studio.py remove /path/to/deck evidence
+python3 scripts/studio.py status /path/to/deck
+python3 scripts/studio.py check /path/to/deck
+python3 scripts/studio.py build /path/to/deck --output /path/to/deck/dist/talk.html
+python3 scripts/studio.py preview /path/to/deck --port 4173
 ```
 
 add 只创建待制作画布。完成制作后删除 data-wby-draft 标记；check/build/preview 会拒绝仍带标记的草稿。ID 使用小写字母、数字和连字符。排序位置从 1 开始。remove 只移出清单，保留源文件和素材；清单更新前保存 deck.json.bak。恢复页面时把原路径重新加入清单，不覆盖原文件。

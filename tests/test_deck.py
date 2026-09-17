@@ -6,7 +6,7 @@ import tempfile
 import urllib.request
 from pathlib import Path
 
-CLI = Path(__file__).resolve().parents[1] / 'scripts/deck.py'
+CLI = Path(__file__).resolve().parents[1] / 'scripts/studio.py'
 with tempfile.TemporaryDirectory() as folder:
     project = Path(folder) / 'deck'
     def call(action, *args, ok=True):
@@ -28,7 +28,7 @@ with tempfile.TemporaryDirectory() as folder:
     assert len(json.loads((project / 'deck.json.bak').read_text())['slides']) == 2
     p = project / 'slides/two.html'
     p.write_text(p.read_text().replace('data-wby-draft', 'data-authored'))
-    assert call('check')['static_packaging'] == 'passed'
+    assert call('check')['packaging'] == 'passed'
     output = Path(call('build')['file'])
     assert output.exists()
     proc = subprocess.Popen([sys.executable, str(CLI), 'preview', str(project), '--port', '0'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)

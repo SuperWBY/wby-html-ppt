@@ -17,11 +17,11 @@
 
 ## 内部制作与文案指南
 
-页面组织、创建、排序、检查与内置命令读取 [slide-authoring.zh-CN.md](references/slide-authoring.zh-CN.md)。编写面向观众的文字时读取 [copywriting.zh-CN.md](references/copywriting.zh-CN.md)。这两份内部指南替代外部页面制作和文风 Skill，不需要安装或调用 oil-ppt、oil-tone。
+页面组织、创建、排序、检查与内置命令读取 [slide-authoring.zh-CN.md](references/slide-authoring.zh-CN.md)。编写面向观众的文字时读取 [copywriting.zh-CN.md](references/copywriting.zh-CN.md)。
 
 新场景插画使用环境提供的生图工具，并保存到项目；准确文字和图形使用 HTML/CSS/SVG；排版和交互使用允许的浏览器工具检查。生图、浏览器和 Python 仍由运行环境提供。环境要求读取工具说明时按要求执行；不声称使用缺失能力，不自动安装工具。
 
-默认交付 HTML。需要 PPTX 时另用适合的导出方式，并说明可编辑性限制。来源与许可见 [third_party/README.md](third_party/README.md)。
+默认交付 HTML。需要 PPTX 时另用适合的导出方式，并说明可编辑性限制。
 
 ## 固定演示能力
 

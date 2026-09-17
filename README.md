@@ -2,22 +2,57 @@
 
 [中文](README.zh-CN.md) | **English**
 
-An AI Skill for building HTML presentations from speaking goals. It brings together content decisions, concise copy, scene-specific illustrations, real screenshots, code-drawn diagrams, and presentation controls.
+> A Codex Skill for turning a speaking goal into an interactive, shareable HTML presentation.
 
-**Adapt the visual expression to the content. Keep the presentation controls consistent.** The green palette and watercolor characters in the examples belong to one deck, not a mandatory theme.
+WBY HTML PPT helps an AI choose the right copy, visual expression, and page composition for each part of a talk. It combines scene-specific illustrations, real screenshots, code-drawn diagrams, and consistent presentation controls—then packages the result as a standalone HTML file.
 
-## The method
+![An interactive HTML presentation made with WBY HTML PPT](docs/images/en/tool-preparation-en.png)
 
-Speaking goal → content relationships → visual direction → composition and assets → implementation → slide-by-slide feedback → delivery.
+## What you get
 
-- Use character illustrations for confusion, discussion, and realization; match expressions and gestures to the scene.
-- Use tool illustrations to explain computers, cloud services, code, documents, and applications.
-- Use HTML/CSS/SVG for precise diagrams, comparisons, cards, icons, speech bubbles, and timelines.
-- Use real screenshots as evidence. Clearly identify teaching mockups.
-- Use short copy and a focused visual for chapter transitions.
-- Continue the existing deck and preserve approved work when making revisions.
+| Start with | Deliver |
+|---|---|
+| A speaking goal, audience, existing deck, or raw material | Editable HTML slide sources and one shareable standalone HTML file |
+| A business scenario or teaching point | Copy, illustrations, screenshots, diagrams, and composition chosen for that scenario |
+| Iteration feedback on individual slides | Revised pages that preserve the approved parts of the deck |
 
-## Consistent controls and motion
+Every delivery includes keyboard navigation, fullscreen, thumbnail overview, image enlargement, page boundaries, and working external links. Motion is supported when it clarifies a relationship or sequence.
+
+## Quick start
+
+Clone the Skill into Codex’s default local Skill directory:
+
+```sh
+git clone https://github.com/SuperWBY/wby-html-ppt.git ~/.codex/skills/wby-html-ppt
+```
+
+Open a new Codex session and use this prompt:
+
+```text
+Use $wby-html-ppt to make a presentation from my materials.
+Choose copy, illustrations, and composition based on each slide's speaking goal.
+Keep the deck visually coherent, include the standard presentation controls,
+and deliver editable source files plus a shareable standalone HTML file.
+```
+
+To revise an existing deck:
+
+```text
+Use $wby-html-ppt to revise slide 6 of this deck and preserve the other approved slides.
+```
+
+## How it works
+
+```text
+Speaking goal → content relationships → visual direction → composition and assets
+→ implementation → slide-by-slide feedback → standalone delivery
+```
+
+- **Match the visual form to the message.** A character illustration can show uncertainty or realization; tool diagrams can explain a system; real screenshots can establish evidence.
+- **Keep controls consistent.** The visual system changes with the deck, while navigation and delivery behavior stay reliable.
+- **Build from approved work.** Revisions continue the current deck instead of recreating unrelated pages.
+
+## Built-in presentation controls
 
 | Input | Action |
 |---|---|
@@ -28,74 +63,75 @@ Speaking goal → content relationships → visual direction → composition and
 | Click a marked screenshot | Enlarge the image |
 | Document / application link | Open the actual external resource |
 
-Includes page numbers, first/last-page boundaries, input-focus protection, and shortcuts inside the slide iframe. Prompt-copy buttons are optional. Lightweight transitions are included; add CSS/SVG content animation when it explains a relationship. Respect reduced-motion preferences and do not auto-advance by default.
+The player supports lightweight transitions and optional CSS/SVG content animation. It respects `prefers-reduced-motion`, does not auto-advance by default, and does not intercept typing in editable fields.
 
-## Install and use
+## Examples
 
-Requires an AI tool that supports local Skills. For Codex's default skill directory, use the following. Inspect an existing installation before replacing it.
+The English README uses localized versions of the original showcase deck. The [Chinese README](README.zh-CN.md) retains the Chinese images. These are examples of visual approaches, not layouts that every deck must copy.
 
-```sh
-git clone https://github.com/SuperWBY/wby-html-ppt.git ~/.codex/skills/wby-html-ppt
-```
+<p align="center">
+  <img src="docs/images/en/requirements-alignment-en.png" alt="Requirements alignment slide" width="49%" />
+  <img src="docs/images/en/environment-comparison-en.png" alt="Local and online environment comparison slide" width="49%" />
+</p>
 
-Start a new session and ask:
+<details>
+<summary>See more examples</summary>
 
-```text
-Use $wby-html-ppt to make a presentation from my materials.
-Choose copy, illustrations, and composition based on each slide's speaking goal.
-Keep the deck visually coherent, include the standard presentation controls,
-and deliver editable source files plus a shareable standalone HTML file.
-```
+<br />
 
-For revisions: “Use $wby-html-ppt to revise slide 6 of this deck and preserve the other approved slides.”
+![Chapter transition](docs/images/en/chapter-transition-en.png)
 
-The Skill includes its own slide-authoring and copywriting guidance, page-management commands, and packaging tools. Image generation, browser access, and Python are supplied by your environment. This repository does not include model services or API keys.
+![Release timeline](docs/images/en/release-timeline-en.png)
+</details>
 
-## Manage slides
+## Included tools
 
-See [the built-in CLI guide](references/slide-authoring.md) for init, add, move, remove, status, check, build, and preview commands. Page removal preserves source files. Static checks do not replace browser review.
+| Tool | Purpose |
+|---|---|
+| `scripts/studio.py` | Initialize decks, add, move, remove, inspect, check, build, and preview slides |
+| `scripts/build.py` | Embed local assets and build one standalone HTML presentation |
+| `assets/player.html` | Reusable presentation controls, independent of slide visual design |
+| `references/` | Bilingual authoring, copywriting, visual-direction, interaction, and delivery guidance |
 
-## Build a standalone file
+For commands and workflow details, see the [built-in CLI guide](references/slide-authoring.md).
 
-The builder requires Python 3.9+ and no third-party Python packages. Create static HTML slides and maintain a single ordered manifest:
+## Standalone HTML delivery
+
+The builder requires Python 3.9+ and no third-party Python packages. Maintain an ordered manifest:
 
 ```json
 {"title":"My presentation","slides":["slides/intro.html","slides/example.html"]}
 ```
 
+Then build the final file:
+
 ```sh
-python3 scripts/build.py /path/to/project   --manifest /path/to/project/deck.json   --output /path/to/project/dist/presentation.html
+python3 scripts/build.py /path/to/project \
+  --manifest /path/to/project/deck.json \
+  --output /path/to/project/dist/presentation.html
 ```
 
-Supports local stylesheets, classic scripts, images, and CSS url() resources in style tags and stylesheets. Assets must stay inside the project; they are deduplicated and embedded. The player defaults to 16:9 and can be adapted. Slide language is determined by source content; the bundled player UI is currently Chinese.
+It embeds supported local stylesheets, classic scripts, images, and CSS `url()` assets. It preserves external hyperlinks, which still require network access and permission.
 
-Convert ES modules, dynamic fetch, CSS @import, srcset, and remote embedded resources to static assets first. This is not a general-purpose website archiver. External document links still require network access and permission. Recipients should download the HTML and open it in a modern desktop browser; chat previews may disable scripts. Verify layout and controls before delivery, not just build success.
+## Scope and limitations
 
-## Showcase
+- The output is HTML, not an automatically editable PowerPoint `.pptx` file.
+- Convert ES modules, dynamic `fetch`, CSS `@import`, `srcset`, and remote embedded resources to static local assets before building.
+- A recipient should download the final HTML and open it in a modern desktop browser. Chat previews may disable scripts.
+- Verify layout, controls, and external links in a browser before delivery.
 
-These localized screenshots show different ways to communicate in an HTML deck. They are examples, not fixed layouts. The Chinese README retains the original Chinese-language screenshots. The repository contains only these showcase screenshots, not the full business deck, internal documents, or data.
+## Contributing
 
-### Tool checklist and scene illustration
-![Tool preparation](docs/images/en/tool-preparation-en.png)
-
-### Character illustration, review checklist, and flow
-![Requirements alignment](docs/images/en/requirements-alignment-en.png)
-
-### Chapter transition and emotional expression
-![Chapter transition](docs/images/en/chapter-transition-en.png)
-
-### Tool diagrams and side-by-side comparison
-![Environment comparison](docs/images/en/environment-comparison-en.png)
-
-### Parallel timelines and version changes
-![Release timeline](docs/images/en/release-timeline-en.png)
+Contributions are welcome for reusable interactions, authoring improvements, documentation, verification coverage, and clearly labeled example decks. Please open an issue first for a substantial change, then include the relevant validation in your pull request.
 
 ## Repository map
 
 - [SKILL.md](SKILL.md): English agent instructions; [中文版](SKILL.zh-CN.md).
 - `references/`: visual decisions, interactions, and delivery guidance in both languages.
-- `assets/player.html`: reusable controls, independent of slide visual design.
-- `scripts/build.py`: standalone HTML builder.
-- `docs/images/`: showcase screenshots.
+- `assets/player.html`: reusable controls shell.
+- `scripts/`: page management, checks, preview, and standalone packaging.
+- `docs/images/`: Chinese and English showcase screenshots.
 
-The output is an HTML presentation. It does not directly generate editable PowerPoint `.pptx` files. Use a separate export workflow and check editability when PPTX is required.
+## License
+
+No license has been selected yet. Until a license is added, do not assume permission to reuse, modify, or redistribute this repository’s contents.

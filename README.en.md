@@ -1,6 +1,6 @@
 # WBY HTML PPT
 
-[中文](README.md) | **English**
+[中文](README.zh-CN.md) | **English**
 
 An AI Skill for building HTML presentations from speaking goals. It brings together content decisions, concise copy, scene-specific illustrations, real screenshots, code-drawn diagrams, and presentation controls.
 
@@ -88,7 +88,7 @@ These author-provided screenshots show a Chinese-language deck and different way
 
 ## Repository map
 
-- [SKILL.md](SKILL.md): Chinese agent instructions; [English version](SKILL.en.md).
+- [SKILL.md](SKILL.md): English agent instructions; [中文版](SKILL.zh-CN.md).
 - `references/`: visual decisions, interactions, and delivery guidance in both languages.
 - `assets/player.html`: reusable controls, independent of slide visual design.
 - `scripts/build.py`: standalone HTML builder.

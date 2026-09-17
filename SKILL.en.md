@@ -1,8 +1,8 @@
 # WBY HTML PPT
 
-[中文](SKILL.md) | English
+[中文](SKILL.zh-CN.md) | English
 
-English companion to the discoverable `SKILL.md` entrypoint. Teach a method, not the layout of one example. Controls, verification, and delivery are consistent; style, composition, assets, and motion follow the content. Explicit user preferences take priority.
+Teach a method, not the layout of one example. Controls, verification, and delivery are consistent; style, composition, assets, and motion follow the content. Explicit user preferences take priority.
 
 ## Working approach
 

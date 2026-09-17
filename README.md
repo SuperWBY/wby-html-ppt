@@ -1,96 +1,97 @@
 # WBY HTML PPT
 
-**中文** | [English](README.en.md)
+[中文](README.zh-CN.md) | **English**
 
-根据讲解目标制作 HTML 演示文稿的 AI Skill：把内容判断、文案、场景插画、真实截图、代码图形和演示交互串成一套工作方法。
+An AI Skill for building HTML presentations from speaking goals. It brings together content decisions, concise copy, scene-specific illustrations, real screenshots, code-drawn diagrams, and presentation controls.
 
-**表达方式随内容变化，演示交互保持一致。** 这里展示的绿色与水彩人物属于案例风格，不是所有课件必须使用的模板。
+**Adapt the visual expression to the content. Keep the presentation controls consistent.** The green palette and watercolor characters in the examples belong to one deck, not a mandatory theme.
 
-## 制作方法
+## The method
 
-讲解目标 → 内容关系 → 视觉方向 → 构图与素材 → 页面实现 → 逐页反馈 → 成品交付。
+Speaking goal → content relationships → visual direction → composition and assets → implementation → slide-by-slide feedback → delivery.
 
-- 人物插画表现业务困惑、讨论、领悟等场景，表情和动作需要与内容一致。
-- 工具插图表现电脑、云端、代码、文档与应用之间的关系。
-- HTML/CSS/SVG 表现流程、对照、卡片、图标、气泡和版本时间线。
-- 真实截图用于实际对话与应用证据；教学示意必须标明身份。
-- 章节过渡用少量文字和合适的主题视觉，给讲解留出停顿。
-- 先延续已确认的课件，再针对反馈修改，不为每个请求重做整套。
+- Use character illustrations for confusion, discussion, and realization; match expressions and gestures to the scene.
+- Use tool illustrations to explain computers, cloud services, code, documents, and applications.
+- Use HTML/CSS/SVG for precise diagrams, comparisons, cards, icons, speech bubbles, and timelines.
+- Use real screenshots as evidence. Clearly identify teaching mockups.
+- Use short copy and a focused visual for chapter transitions.
+- Continue the existing deck and preserve approved work when making revisions.
 
-## 固定交互与动画
+## Consistent controls and motion
 
-| 操作 | 功能 |
+| Input | Action |
 |---|---|
-| ← / → | 上一页 / 下一页 |
-| 全屏按钮 / F | 切换全屏（受浏览器支持与权限影响） |
-| 总览按钮 / O | 总览全部页面，点击缩略图跳转 |
-| Esc | 关闭浮层；全屏退出由浏览器处理 |
-| 点击标记的截图 | 放大查看 |
-| 文档 / 应用链接 | 打开真实外部资源 |
+| ← / → | Previous / next slide |
+| Fullscreen button / F | Toggle fullscreen, subject to browser support and permissions |
+| Overview button / O | View thumbnails and click to jump |
+| Esc | Close overlays; the browser handles exiting fullscreen |
+| Click a marked screenshot | Enlarge the image |
+| Document / application link | Open the actual external resource |
 
-包含页码、首末页边界处理、输入焦点保护和 iframe 内快捷键支持。可选提示词复制按钮。播放器支持轻量过渡，内容可按需要添加 CSS/SVG 动画；尊重系统“减少动态效果”设置，不默认自动翻页。
+Includes page numbers, first/last-page boundaries, input-focus protection, and shortcuts inside the slide iframe. Prompt-copy buttons are optional. Lightweight transitions are included; add CSS/SVG content animation when it explains a relationship. Respect reduced-motion preferences and do not auto-advance by default.
 
-## 安装与使用
+## Install and use
 
-需要支持本地 Skill 的 AI 工具。以下为 Codex 默认目录的安装示例；目标目录已存在时，先检查现有版本。
+Requires an AI tool that supports local Skills. For Codex's default skill directory, use the following. Inspect an existing installation before replacing it.
 
 ```sh
 git clone https://github.com/SuperWBY/wby-html-ppt.git ~/.codex/skills/wby-html-ppt
 ```
 
-重新打开会话后调用：
+Start a new session and ask:
 
 ```text
-使用 $wby-html-ppt，根据我的材料制作课件。
-按每页的讲解目标决定文案、插画和构图，保持整套风格一致。
-加入固定演示交互，交付源项目和可以转发的单文件 HTML。
+Use $wby-html-ppt to make a presentation from my materials.
+Choose copy, illustrations, and composition based on each slide's speaking goal.
+Keep the deck visually coherent, include the standard presentation controls,
+and deliver editable source files plus a shareable standalone HTML file.
 ```
 
-也可以说：“使用 $wby-html-ppt 修改现有课件第 6 页，保留其他已确认页面。”
+For revisions: “Use $wby-html-ppt to revise slide 6 of this deck and preserve the other approved slides.”
 
-Skill 能独立提供制作判断与打包工具。oil-ppt、oil-tone 是可选协同能力，使用时需在环境中可用；需要 AI 生图时还需要相应的图片生成工具。仓库不附带模型服务、API 密钥或这些外部 Skill。
+The Skill supplies its own decision framework and packaging tool. oil-ppt and oil-tone are optional integrations when available. Generating new AI illustrations requires an image-generation tool. This repository does not include model services, API keys, or those external Skills.
 
-## 打包
+## Build a standalone file
 
-打包脚本使用 Python 3.9+，无需第三方 Python 依赖。先制作标准静态 HTML 单页，再维护唯一页面清单：
+The builder requires Python 3.9+ and no third-party Python packages. Create static HTML slides and maintain a single ordered manifest:
 
 ```json
-{"title":"我的演示","slides":["slides/intro.html","slides/example.html"]}
+{"title":"My presentation","slides":["slides/intro.html","slides/example.html"]}
 ```
 
 ```sh
 python3 scripts/build.py /path/to/project   --manifest /path/to/project/deck.json   --output /path/to/project/dist/presentation.html
 ```
 
-支持本地样式表、普通脚本、图片，以及 style 标签和样式表中的 CSS url() 资源。资源限于项目目录，嵌入并去重。播放器默认 16:9，可修改。源页面决定课件语言；随附播放器界面当前为中文。
+Supports local stylesheets, classic scripts, images, and CSS url() resources in style tags and stylesheets. Assets must stay inside the project; they are deduplicated and embedded. The player defaults to 16:9 and can be adapted. Slide language is determined by source content; the bundled player UI is currently Chinese.
 
-ES modules、动态 fetch、CSS @import、srcset、远程嵌入资源需要先转成静态资源；此脚本不是通用网页归档器。外部文档链接仍需要网络和访问权限。接收者下载 HTML 后用现代桌面浏览器打开，聊天窗口预览不一定执行脚本。交付前需实测布局与交互，不能仅凭打包成功判断完成。
+Convert ES modules, dynamic fetch, CSS @import, srcset, and remote embedded resources to static assets first. This is not a general-purpose website archiver. External document links still require network access and permission. Recipients should download the HTML and open it in a modern desktop browser; chat previews may disable scripts. Verify layout and controls before delivery, not just build success.
 
-## 案例展示
+## Showcase
 
-以下为作者提供的中文课件截图，展示不同表达方式；不是待套用的固定版式。这里只发布展示截图，不包含完整业务课件、内部文档或数据。
+These author-provided screenshots show a Chinese-language deck and different ways to communicate. They are examples, not fixed layouts. The repository contains only these showcase screenshots, not the full business deck, internal documents, or data.
 
-### 工具清单与场景插画
-![工具准备](docs/images/tool-preparation.png)
+### Tool checklist and scene illustration
+![Tool preparation](docs/images/tool-preparation.png)
 
-### 人物插画、核对清单与流程
-![需求对齐](docs/images/requirements-alignment.png)
+### Character illustration, review checklist, and flow
+![Requirements alignment](docs/images/requirements-alignment.png)
 
-### 章节过渡与情绪表达
-![章节过渡](docs/images/chapter-transition.png)
+### Chapter transition and emotional expression
+![Chapter transition](docs/images/chapter-transition.png)
 
-### 工具图形与左右对照
-![环境对照](docs/images/environment-comparison.png)
+### Tool diagrams and side-by-side comparison
+![Environment comparison](docs/images/environment-comparison.png)
 
-### 双轨时间线与版本变化
-![版本迭代](docs/images/release-timeline.png)
+### Parallel timelines and version changes
+![Release timeline](docs/images/release-timeline.png)
 
-## 仓库内容
+## Repository map
 
-- [SKILL.md](SKILL.md)：中文执行指南；[English](SKILL.en.md)。
-- `references/`：视觉选择、交互和交付细则，中英文对应。
-- `assets/player.html`：可复用的交互外壳，页面视觉由项目自行设计。
-- `scripts/build.py`：单文件打包工具。
-- `docs/images/`：这次课件的展示截图。
+- [SKILL.md](SKILL.md): English agent instructions; [中文版](SKILL.zh-CN.md).
+- `references/`: visual decisions, interactions, and delivery guidance in both languages.
+- `assets/player.html`: reusable controls, independent of slide visual design.
+- `scripts/build.py`: standalone HTML builder.
+- `docs/images/`: showcase screenshots.
 
-这里交付的是 HTML 演示文稿，不直接生成可编辑的 PowerPoint `.pptx`。如需 PPTX，应另行使用导出流程并检查可编辑性。
+The output is an HTML presentation. It does not directly generate editable PowerPoint `.pptx` files. Use a separate export workflow and check editability when PPTX is required.

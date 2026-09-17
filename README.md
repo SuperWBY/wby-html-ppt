@@ -73,22 +73,22 @@ Convert ES modules, dynamic fetch, CSS @import, srcset, and remote embedded reso
 
 ## Showcase
 
-These author-provided screenshots show a Chinese-language deck and different ways to communicate. They are examples, not fixed layouts. The repository contains only these showcase screenshots, not the full business deck, internal documents, or data.
+These localized screenshots show different ways to communicate in an HTML deck. They are examples, not fixed layouts. The Chinese README retains the original Chinese-language screenshots. The repository contains only these showcase screenshots, not the full business deck, internal documents, or data.
 
 ### Tool checklist and scene illustration
-![Tool preparation](docs/images/tool-preparation.png)
+![Tool preparation](docs/images/en/tool-preparation-en.png)
 
 ### Character illustration, review checklist, and flow
-![Requirements alignment](docs/images/requirements-alignment.png)
+![Requirements alignment](docs/images/en/requirements-alignment-en.png)
 
 ### Chapter transition and emotional expression
-![Chapter transition](docs/images/chapter-transition.png)
+![Chapter transition](docs/images/en/chapter-transition-en.png)
 
 ### Tool diagrams and side-by-side comparison
-![Environment comparison](docs/images/environment-comparison.png)
+![Environment comparison](docs/images/en/environment-comparison-en.png)
 
 ### Parallel timelines and version changes
-![Release timeline](docs/images/release-timeline.png)
+![Release timeline](docs/images/en/release-timeline-en.png)
 
 ## Repository map
 
